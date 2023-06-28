@@ -27,6 +27,7 @@
     </div>
 </div>
 <script>
+    var socket = io();
     //On click event, identified using id send
     $(() => {
         $("#send").click(() => {
@@ -35,6 +36,8 @@
         });
         getMessages();
     })
+
+    socket.on('message', addMessage);
 
     //Attach messges to the div using id 
     function addMessage(message) {

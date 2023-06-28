@@ -15,7 +15,8 @@
             send Message
         </h1>
         <br />
-        <input class="form-control" placeholder="Name">
+        <input id="name" class="form-control" placeholder="Name">
+        <textarea id="message" class="form-control" placeholder="Message"> </textarea>
         <br />
         <button id="send" class="btn btn-success">send</button>
     </div>
@@ -24,15 +25,22 @@
     </div>
 </div>
 <script>
+    //On click event, identified using id send
     $(() => {
         $("#send").click(() => {
-            addMessage({ name: 'Tim', message: 'Hello' });
+            var message = { name: $("#name").val(), message: $("#message").val() };
+            postMessages(message);
         });
         getMessages();
     })
+
+    //Attach messges to the div using id 
     function addMessage(message) {
         $("#messages").append(`<h4> ${message.name}</h4> <p>${message.message}</p>`);
     }
+
+
+    //Get messsages form get method in url,display the messages in site
     function getMessages() {
         $.get('http://localhost:3000/messages', (data) => {
             // data.forEach(element => {
@@ -42,5 +50,10 @@
             //Short form of above:
             data.forEach(addMessage);
         });
+    }
+
+
+    function postMessages(message) {
+        $.post('http://localhost:3000/messages', message);
     }
 </script>
